@@ -19,7 +19,7 @@ export function ThemeProvider({
   children,
 }: Props) {
   return (
-    <Tag data-theme={theme} className={className} style={style}>
+    <Tag id="theme-root" data-theme={theme} className={className} style={style}>
       {children}
     </Tag>
   );

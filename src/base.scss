@@ -1,29 +1,44 @@
 /* Declare the global order ONCE */
 @layer reset, tokens, base, components, utilities;
 
-/* =========================
-   Reset (keep minimal)
-   ========================= */
+/* ===== Reset ===== */
 @layer reset {
-  *, *::before, *::after { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; }
-  body { margin: 0; }
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    margin: 0;
+  }
+  button,
+  input,
+  select,
+  textarea,
+  optgroup,
+  label,
+  legend {
+    font: inherit;
+    color: inherit;
+  }
 }
 
-/* =========================
-   Tokens (design tokens)
-   - Palette + semantic vars
-   - Use var(--...) in components
-   ========================= */
+/* ===== Tokens ===== */
 @layer tokens {
   :root {
     /* Palette */
     --color-green: #00866e;
     --color-light-green: #d4f3db;
     --color-light-blue: #bfebf4;
+    --color-lighter-gray: #f9f9f9;
     --color-light-gray: #eeeeee;
     --color-gray: #d9d9d9;
+    --color-gray-dark: #828282;
     --color-black: #000000;
+    --color-white: #ffffff;
 
     /* Semantic */
     --color-primary: var(--color-green);
@@ -32,8 +47,8 @@
     --bg-color: #ffffff;
 
     /* Typography */
-    --font-sans: 'Roboto', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
-    'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji';
+    --font-sans: "Roboto", ui-sans-serif, system-ui;
+    --font-weight-medium: 500;
 
     /* Layout */
     --container-max-width: 1280px;
@@ -43,26 +58,22 @@
     --radius: 12px;
   }
 
-  /* Optional: dark theme example (opt-in via data attribute) */
+  /* Optional dark theme (scoped via Provider’s data-theme) */
   [data-theme="dark"] {
-    --text-color: #eeeeee;
-    --bg-color: #111111;
-    --color-primary: #0fb79a; /* tweak if desired */
-    --color-border: #3a3a3a;
   }
 }
 
-/* =========================
-   Base element defaults
-   ========================= */
+/* ===== Base ===== */
 @layer base {
-  :where(html, body) {
+  html,
+  body {
     color: var(--text-color);
     background: var(--bg-color);
     font-family: var(--font-sans);
+    line-height: 1.5;
   }
 
-  /* Your existing root container styles */
+  /* Keep layout off body; scope to your app root instead */
   #root {
     max-width: var(--container-max-width);
     margin: 0 auto;
@@ -71,9 +82,10 @@
   }
 }
 
-/* =========================
-   Components & Utilities
-   (left intentionally empty; component modules append here)
-   ========================= */
-@layer components { /* component styles append via @layer components { ... } */ }
-@layer utilities  { /* small helpers */ }
+/* ===== Components / Utilities (append from modules) ===== */
+@layer components {
+  /* component styles append here from .module.scss */
+}
+@layer utilities {
+  /* small helpers */
+}

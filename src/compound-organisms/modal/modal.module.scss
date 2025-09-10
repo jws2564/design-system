@@ -1,0 +1,47 @@
+@layer components {
+  .modal-dialog {
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    max-width: 90vw;
+    max-height: 90vh;
+    padding: 8px 12px;
+    background: var(--color-white);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    overflow-y: scroll;
+
+    header {
+      padding: 8px 0;
+      h2 {
+        line-height: normal;
+        font-size: 16px;
+        font-weight: 500;
+        margin: 0;
+      }
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      .close-button {
+        position: relative;
+        top: -8px;
+        cursor: pointer;
+      }
+    }
+
+    main {
+      text-align: left;
+      padding: 8px 0;
+    }
+
+    footer {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+  }
+}

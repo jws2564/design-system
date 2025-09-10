@@ -1,0 +1,9 @@
+@layer components {
+  .label {
+    font-size: 10px;
+    font-weight: 500;
+    padding: 2px 3px 1px;
+    border-radius: 3px;
+    background-color: var(--color-light-green);
+  }
+}

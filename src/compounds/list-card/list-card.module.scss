@@ -1,0 +1,26 @@
+@layer components {
+  .list-card {
+    cursor: pointer;
+    line-height: normal;
+    text-align: left;
+    padding: 12px;
+    font-size: 14px; //TODO var for font size
+
+    .description {
+      font-size: 12px;
+      font-weight: normal;
+      color: var(--color-gray-dark);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .selected-icon {
+      padding: 0 4px 0;
+    }
+
+    .badge {
+      padding-right: 4px;
+    }
+  }
+}

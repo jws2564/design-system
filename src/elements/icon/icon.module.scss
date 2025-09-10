@@ -1,0 +1,23 @@
+@layer components {
+  .icon {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 0;
+    color: currentColor;
+  }
+
+  .small {
+    width: 12px;
+    height: 12px;
+  }
+
+  .medium {
+    width: 18px;
+    height: 18px;
+  }
+
+  .large {
+    width: 24px;
+    height: 24px;
+  }
+}

@@ -1,0 +1,12 @@
+@layer components {
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  label {
+    font-size: 10px; //TODO add to theme
+    margin-bottom: 4px;
+  }
+}

@@ -1,0 +1,21 @@
+.modal-body {
+  z-index: 1;
+  width: 500px;
+  min-height: 200px;
+  .tab-content-form {
+    .display-name {
+      width: 70%;
+    }
+    .type {
+      width: 30%;
+    }
+    .row {
+      padding: 8px 0;
+      &.split {
+        display: flex;
+        width: 100%;
+        gap: 8px;
+      }
+    }
+  }
+}

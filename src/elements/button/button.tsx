@@ -1,12 +1,30 @@
+import React from "react";
 import styles from "./button.module.scss";
 
-interface Props {
-  text: string;
-  onClick?: () => void;
-  disabled?: boolean;
-  type?: "button" | "submit" | "reset";
-}
+export type ButtonSize = "small" | "medium" | "large";
+export type ButtonVariant = "primary" | "secondary";
 
-export const Button: React.FC<Props> = ({ text }: Props) => {
-  return <button>{text}</button>;
+export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  text: string;
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+};
+
+export const Button: React.FC<ButtonProps> = ({
+  text,
+  variant = "primary",
+  size = "medium",
+  className,
+  ...rest
+}: ButtonProps) => {
+  //TODO this should probably be a util
+  const classes = [className, styles[variant], styles[size]]
+    .filter(Boolean)
+    .join(" ");
+
+  return (
+    <button className={classes} {...rest}>
+      {text}
+    </button>
+  );
 };
