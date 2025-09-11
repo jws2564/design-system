@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { FormField } from "./form-field";
 import { TextInput } from "../../elements/text-input/text-input";
-import { MenuInput } from "../../organisms/menu-input/menu-input.tsx";
+import { MenuInput } from "../../mixtures/menu-input/menu-input.tsx";
 import { fn } from "storybook/test";
 
 const menuInput = (

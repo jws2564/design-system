@@ -1,10 +1,10 @@
 // menu-input.stories.tsx
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { MenuInput } from "./menu-input";
-import type { Props as MenuInputProps } from "./menu-input";
-import type { ListItem } from "../../compounds/list-card/list-card";
-import type { Tab } from "../../compounds/tab-set/tab-set";
+import { MenuInput } from "./menu-input.tsx";
+import type { Props as MenuInputProps } from "./menu-input.tsx";
+import type { ListItem } from "../../compounds/list-card/list-card.tsx";
+import type { Tab } from "../../compounds/tab-set/tab-set.tsx";
 import { fn } from "storybook/test";
 
 const sampleItems: ListItem[] = [
@@ -44,7 +44,7 @@ const sampleTabs: Tab[] = [
 ];
 
 const meta: Meta<typeof MenuInput> = {
-  title: "Organisms/MenuInput",
+  title: "Mixtures/MenuInput",
   component: MenuInput,
   tags: ["autodocs"],
   parameters: {

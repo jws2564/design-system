@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Modal } from "../../compound-organisms/modal/modal.tsx";
+import { Modal } from "../../compounds/modal/modal.tsx";
 import styles from "./add-thing-modal.module.scss";
 import { TabSet } from "../../compounds/tab-set/tab-set.tsx";
 import { FormField } from "../../compounds/form-field/form-field.tsx";
 import { TextInput } from "../../elements/text-input/text-input.tsx";
-import { MenuInput } from "../../organisms/menu-input/menu-input.tsx";
+import { MenuInput } from "../../mixtures/menu-input/menu-input.tsx";
 import { Button } from "../../elements/button/button.tsx";
 import { Label } from "../../elements/label/label.tsx";
 
@@ -18,6 +18,95 @@ const tabs = [
     id: "2",
     label: "Choose from Template",
     type: "button",
+  },
+];
+
+const itemsForTypeField = [
+  {
+    id: "1",
+    value: "cool-thing-value-1",
+    label: "Cool Thing",
+    description: "Has user generated description that is long",
+    categoryId: "1",
+  },
+  {
+    id: "2",
+    value: "option-2",
+    label: "Option",
+    description: "Has user generated description that is long",
+    categoryId: "1",
+  },
+  {
+    id: "3",
+    value: "option-3",
+    label: "Option",
+    categoryId: "1",
+  },
+  {
+    id: "4",
+    value: "option-4",
+    label: "Option",
+    categoryId: "1",
+  },
+  {
+    id: "5",
+    value: "option-5",
+    label: "Option",
+    categoryId: "1",
+  },
+  {
+    id: "6",
+    value: "option-6",
+    label: "Option",
+    description: "This is an option for category 2",
+    categoryId: "2",
+  },
+];
+const itemsForTimeZoneField = [
+  {
+    id: "1",
+    value: "cool-thing-value-1",
+    label: "Cool Thing",
+    description: "Has user generated description that is long",
+    categoryId: "1",
+    badge: (
+      <Label
+        style={{ background: "var(--color-light-green)" }}
+        text="My TIMEZONE cat 1"
+      />
+    ),
+  },
+  {
+    id: "2",
+    value: "option-2",
+    label: "Option",
+    description: "Has user generated description that is long",
+    categoryId: "1",
+  },
+  {
+    id: "3",
+    value: "option-3",
+    label: "Option",
+    categoryId: "1",
+  },
+  {
+    id: "4",
+    value: "option-4",
+    label: "Option",
+    categoryId: "1",
+  },
+  {
+    id: "5",
+    value: "option-5",
+    label: "Option",
+    categoryId: "1",
+  },
+  {
+    id: "6",
+    value: "option-6",
+    label: "Option",
+    description: "This is an option for category 2",
+    categoryId: "2",
   },
 ];
 
@@ -85,49 +174,7 @@ export const AddThingModal: React.FC = () => {
                   field={
                     <MenuInput
                       labelText="Type"
-                      items={[
-                        {
-                          id: "1",
-                          value: "cool-thing-value-1",
-                          label: "Cool Thing",
-                          description:
-                            "Has user generated description that is long",
-                          categoryId: "1",
-                        },
-                        {
-                          id: "2",
-                          value: "option-2",
-                          label: "Option",
-                          description:
-                            "Has user generated description that is long",
-                          categoryId: "1",
-                        },
-                        {
-                          id: "3",
-                          value: "option-3",
-                          label: "Option",
-                          categoryId: "1",
-                        },
-                        {
-                          id: "4",
-                          value: "option-4",
-                          label: "Option",
-                          categoryId: "1",
-                        },
-                        {
-                          id: "5",
-                          value: "option-5",
-                          label: "Option",
-                          categoryId: "1",
-                        },
-                        {
-                          id: "6",
-                          value: "option-6",
-                          label: "Option",
-                          description: "This is an option for category 2",
-                          categoryId: "2",
-                        },
-                      ]}
+                      items={itemsForTypeField}
                       selectedListItemId={formValues.type}
                       onSelectCallback={(listItem) => {
                         setFormValues({ ...formValues, type: listItem.id });
@@ -149,55 +196,7 @@ export const AddThingModal: React.FC = () => {
                   field={
                     <MenuInput
                       labelText="Time Zone"
-                      items={[
-                        {
-                          id: "1",
-                          value: "cool-thing-value-1",
-                          label: "Cool Thing",
-                          description:
-                            "Has user generated description that is long",
-                          categoryId: "1",
-                          badge: (
-                            <Label
-                              style={{ background: "var(--color-light-green)" }}
-                              text="My TIMEZONE cat 1"
-                            />
-                          ),
-                        },
-                        {
-                          id: "2",
-                          value: "option-2",
-                          label: "Option",
-                          description:
-                            "Has user generated description that is long",
-                          categoryId: "1",
-                        },
-                        {
-                          id: "3",
-                          value: "option-3",
-                          label: "Option",
-                          categoryId: "1",
-                        },
-                        {
-                          id: "4",
-                          value: "option-4",
-                          label: "Option",
-                          categoryId: "1",
-                        },
-                        {
-                          id: "5",
-                          value: "option-5",
-                          label: "Option",
-                          categoryId: "1",
-                        },
-                        {
-                          id: "6",
-                          value: "option-6",
-                          label: "Option",
-                          description: "This is an option for category 2",
-                          categoryId: "2",
-                        },
-                      ]}
+                      items={itemsForTimeZoneField}
                       selectedListItemId={formValues.timeZone}
                       onSelectCallback={(listItem) => {
                         setFormValues({ ...formValues, timeZone: listItem.id });

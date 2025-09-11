@@ -157,28 +157,6 @@ const ThemeTokens: React.FC = () => {
           </tbody>
         </table>
       </section>
-
-      {/* Layout / Spacing */}
-      <section>
-        <h3>Layout & Spacing</h3>
-        <table>
-          <thead>
-            <tr>
-              <th style={{ textAlign: "left" }}>Variable</th>
-              <th style={{ textAlign: "left" }} colSpan={2}>
-                Sample / Value
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <SizeRow name="--container-max-width" />
-            <SizeRow name="--space-1" kind="space" />
-            <SizeRow name="--space-2" kind="space" />
-            <SizeRow name="--space-3" kind="space" />
-            <SizeRow name="--radius" />
-          </tbody>
-        </table>
-      </section>
     </div>
   );
 };

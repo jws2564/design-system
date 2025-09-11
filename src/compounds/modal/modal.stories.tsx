@@ -1,11 +1,10 @@
 // modal.stories.tsx
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Modal } from "./modal";
-import { Button } from "../../elements/button/button";
+import { Modal } from "./modal.tsx";
+import { Button } from "../../elements/button/button.tsx";
 import { fn } from "storybook/test";
 
-// Decorator: make sure #theme-root exists for the portal
 const ensureThemeRoot = (Story: React.FC) => {
   if (!document.getElementById("theme-root")) {
     const root = document.createElement("main");
@@ -19,7 +18,7 @@ const ensureThemeRoot = (Story: React.FC) => {
 };
 
 const meta: Meta<typeof Modal> = {
-  title: "Compound Organisms/Modal",
+  title: "Compounds/Modal",
   component: Modal,
   tags: ["autodocs"],
   decorators: [ensureThemeRoot],

@@ -3,7 +3,7 @@ import { AddThingModal } from "./add-thing-modal.tsx";
 
 const meta = {
   component: AddThingModal,
-  title: "Systems/Add Thing Modal",
+  title: "Organisms/Add Thing Modal",
 } satisfies Meta<typeof AddThingModal>;
 
 export default meta;

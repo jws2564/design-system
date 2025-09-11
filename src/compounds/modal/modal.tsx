@@ -9,7 +9,7 @@ type ButtonType = React.ReactElement<
   typeof Button
 >;
 
-interface Props {
+export interface ModalProps {
   showCloseButton?: boolean;
   id: string;
   title?: string;
@@ -20,7 +20,7 @@ interface Props {
   closeCallback?: () => void;
 }
 
-export const Modal: React.FC<Props> = ({
+export const Modal: React.FC<ModalProps> = ({
   showCloseButton,
   id,
   title,

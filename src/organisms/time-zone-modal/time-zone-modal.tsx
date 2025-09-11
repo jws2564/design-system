@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Modal } from "../../compound-organisms/modal/modal.tsx";
+import { Modal } from "../../compounds/modal/modal.tsx";
 import { FormField } from "../../compounds/form-field/form-field.tsx";
 import { TextInput } from "../../elements/text-input/text-input.tsx";
 import { Button } from "../../elements/button/button.tsx";
-import { MenuInput } from "../../organisms/menu-input/menu-input.tsx";
+import { MenuInput } from "../../mixtures/menu-input/menu-input.tsx";
 import { getTimeZones } from "@vvo/tzdb";
 import type { ListItem } from "../../compounds/list-card/list-card.tsx";
 import styles from "./time-zone-modal.module.scss";

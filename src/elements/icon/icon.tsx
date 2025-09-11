@@ -21,7 +21,6 @@ export type IconProps = {
 } & React.SVGProps<SVGSVGElement>;
 
 //TODO figure out how to make changing the color on the svg path easier
-
 //TODO possibly do some lazy loading here to help with bundle size
 const icons: Record<IconName, React.FC> = {
   clear: Clear,

@@ -1,8 +1,8 @@
 // time-zone-modal.stories.tsx
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { TimeZoneModal } from "./time-zone-modal";
-import { Button } from "../../elements/button/button";
+import { TimeZoneModal } from "./time-zone-modal.tsx";
+import { Button } from "../../elements/button/button.tsx";
 import { fn } from "storybook/test";
 
 // Decorator: ensure a portal target exists for the modal
@@ -28,7 +28,7 @@ const guessedTz =
     : "";
 
 const meta: Meta<typeof TimeZoneModal> = {
-  title: "Systems/Time Zone Modal",
+  title: "Organisms/Time Zone Modal",
   component: TimeZoneModal,
   tags: ["autodocs"],
   decorators: [ensureThemeRoot],

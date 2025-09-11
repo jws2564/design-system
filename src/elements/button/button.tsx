@@ -17,7 +17,6 @@ export const Button: React.FC<ButtonProps> = ({
   className,
   ...rest
 }: ButtonProps) => {
-  //TODO this should probably be a util
   const classes = [className, styles[variant], styles[size]]
     .filter(Boolean)
     .join(" ");

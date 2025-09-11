@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./App.scss";
 //import { AddThingModal } from "./systems/add-thing-modal/add-thing-modal.tsx";
-import { TimeZoneModal } from "./systems/time-zone-modal/time-zone-modal.tsx";
+import { TimeZoneModal } from "./organisms/time-zone-modal/time-zone-modal.tsx";
 
 function App() {
   //return <AddThingModal />;

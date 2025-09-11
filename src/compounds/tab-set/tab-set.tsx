@@ -8,14 +8,12 @@ export interface Tab {
   isSelected?: boolean;
 }
 
-type Props = React.HTMLAttributes<HTMLDivElement> & {
+type TabSetProps = React.HTMLAttributes<HTMLDivElement> & {
   tabs: Tab[];
   onSelectCallback?: (tab: Tab) => void;
 };
 
-//TODO keyboard navigation, etc for accessibility
-
-export const TabSet: React.FC<Props> = ({
+export const TabSet: React.FC<TabSetProps> = ({
   tabs,
   onSelectCallback,
   ...rest
