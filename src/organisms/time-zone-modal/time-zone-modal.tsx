@@ -13,6 +13,7 @@ interface Props {
   onCloseCallback: () => void;
   isOpen: boolean;
   defaultTimeZone?: string;
+  timeZoneList?: ListItem[];
 }
 
 const timeZones: ListItem[] = getTimeZones().map((z) => ({
@@ -28,6 +29,7 @@ export const TimeZoneModal: React.FC<Props> = ({
   onCloseCallback,
   isOpen,
   defaultTimeZone = "",
+  timeZoneList = timeZones,
 }) => {
   const [state, setState] = useState({
     name: "",
@@ -76,7 +78,7 @@ export const TimeZoneModal: React.FC<Props> = ({
                 }
                 enableSearch={true}
                 labelText="Time Zone"
-                items={timeZones}
+                items={timeZoneList}
                 selectedListItemId={state.timeZone}
               />
             }
