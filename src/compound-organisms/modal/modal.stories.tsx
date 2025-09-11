@@ -11,7 +11,7 @@ const ensureThemeRoot = (Story: React.FC) => {
     const root = document.createElement("main");
     root.id = "theme-root";
     // Optional but handy so the overlay isn't cramped in Docs
-    root.style.minHeight = "700px";
+    root.style.minHeight = "200px";
     root.style.position = "relative";
     document.body.appendChild(root);
   }
@@ -24,10 +24,9 @@ const meta: Meta<typeof Modal> = {
   tags: ["autodocs"],
   decorators: [ensureThemeRoot],
   parameters: {
-    layout: "fullscreen", // optional, gives more width
+    layout: "padded",
     docs: {
-      story: { inline: false }, // render in an iframe
-      iframeHeight: 800, // now respected
+      story: { inline: false },
     },
   },
   args: {
@@ -37,10 +36,8 @@ const meta: Meta<typeof Modal> = {
     showCloseButton: true,
     closeCallback: fn(),
     children: (
-      <div>
-        <p>
-          This is some modal content. You can put forms, text, or anything here.
-        </p>
+      <div style={{ width: 350 }}>
+        You can put forms, text, or anything here.
       </div>
     ),
   },
@@ -57,21 +54,20 @@ const meta: Meta<typeof Modal> = {
       description: "Callback function fired when the modal closes",
     },
     footerPrimaryButton: {
-      table: { disable: true },
+      table: { disable: true, type: { summary: "ListItem[]" } },
       description: "Button of variant primary shown in footer",
-      type: "Button",
     },
     footerSecondaryButton: {
       table: {
         disable: true,
         description: "Button of variant secondary show in footer",
-        type: "Button",
+        table: { type: { summary: "Button" } },
       },
     },
     children: {
       control: "object",
       description: "Modal body markup",
-      type: "ReactNode",
+      table: { type: { summary: "ReactNode" } },
     },
   },
 };
@@ -79,9 +75,15 @@ export default meta;
 
 type Story = StoryObj<typeof Modal>;
 
-/**
- * Stateful playground to demo open/close behavior.
- */
+export const SimpleModal: Story = {
+  args: {
+    title: "Simple Modal",
+    showCloseButton: false,
+    footerPrimaryButton: <Button text="Accept" />,
+    children: <div style={{ width: 350 }}>Your message text will go here.</div>,
+  },
+};
+
 export const Playground: Story = {
   render: (args) => {
     const [open, setOpen] = React.useState(args.isOpen);
@@ -122,16 +124,22 @@ export const WithFooterButtons: Story = {
         onClick={fn(() => "footerPrimaryButton.onClick")}
       />
     ),
+    children: (
+      <div style={{ width: 350, padding: "8px 0 16px" }}>
+        You can put forms, text, or anything here.
+      </div>
+    ),
   },
   render: Playground.render,
 };
 
-export const LongContent: Story = {
+export const WithScroll: Story = {
   args: {
+    title: "20 Lines of Text",
     children: (
-      <div>
+      <div style={{ overflowY: "auto", height: 250 }}>
         {Array.from({ length: 20 }).map((_, i) => (
-          <p key={i}>
+          <p style={{ margin: "0" }} key={i}>
             Line {i + 1}: Lorem ipsum dolor sit amet, consectetur adipiscing
             elit.
           </p>

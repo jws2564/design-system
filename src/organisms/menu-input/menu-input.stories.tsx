@@ -47,9 +47,16 @@ const meta: Meta<typeof MenuInput> = {
   title: "Organisms/MenuInput",
   component: MenuInput,
   tags: ["autodocs"],
+  parameters: {
+    layout: "padded",
+    docs: {
+      story: { inline: false },
+    },
+    iframeHeight: 800,
+  },
   decorators: [
     (Story) => (
-      <div style={{ minHeight: 300, padding: 16 }}>
+      <div style={{ height: 300, padding: 16 }}>
         <Story />
       </div>
     ),
@@ -69,12 +76,12 @@ const meta: Meta<typeof MenuInput> = {
     items: {
       control: "object",
       description: "Array of `ListItem` to be shown in the menu",
-      type: "ListItem[]",
+      table: { type: { summary: "ListItem[]" } },
     },
     categoryTabList: {
       control: "object",
       description: "Array of `Tab` used to populate the `TabSet`",
-      type: "Tab[]",
+      table: { type: { summary: "Tab[]" } },
     },
     defaultCategoryId: {
       control: "text",

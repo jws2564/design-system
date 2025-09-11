@@ -1,5 +1,5 @@
 import type { Preview } from "@storybook/react-vite";
-import { ThemeProvider } from "../src/Theme-Provider";
+import { ThemeProvider } from "../src/Theme-Provider.tsx";
 
 const preview: Preview = {
   parameters: {

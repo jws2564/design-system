@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Modal } from "../compound-organisms/modal/modal.tsx";
+import { Modal } from "../../compound-organisms/modal/modal.tsx";
 import styles from "./add-thing-modal.module.scss";
-import { TabSet } from "../compounds/tab-set/tab-set.tsx";
-import { FormField } from "../compounds/form-field/form-field.tsx";
-import { TextInput } from "../elements/text-input/text-input.tsx";
-import { MenuInput } from "../organisms/menu-input/menu-input.tsx";
-import { Button } from "../elements/button/button.tsx";
-import { Label } from "../elements/label/label.tsx";
+import { TabSet } from "../../compounds/tab-set/tab-set.tsx";
+import { FormField } from "../../compounds/form-field/form-field.tsx";
+import { TextInput } from "../../elements/text-input/text-input.tsx";
+import { MenuInput } from "../../organisms/menu-input/menu-input.tsx";
+import { Button } from "../../elements/button/button.tsx";
+import { Label } from "../../elements/label/label.tsx";
 
 const tabs = [
   {
@@ -128,7 +128,7 @@ export const AddThingModal: React.FC = () => {
                           categoryId: "2",
                         },
                       ]}
-                      selectedListIemId={formValues.type}
+                      selectedListItemId={formValues.type}
                       onSelectCallback={(listItem) => {
                         setFormValues({ ...formValues, type: listItem.id });
                       }}
@@ -198,7 +198,7 @@ export const AddThingModal: React.FC = () => {
                           categoryId: "2",
                         },
                       ]}
-                      selectedListIemId={formValues.timeZone}
+                      selectedListItemId={formValues.timeZone}
                       onSelectCallback={(listItem) => {
                         setFormValues({ ...formValues, timeZone: listItem.id });
                       }}

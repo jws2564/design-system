@@ -13,7 +13,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     margin: 0;
-    overflow-y: scroll;
+    //overflow-y: auto;
 
     header {
       padding: 8px 0;
@@ -34,8 +34,7 @@
     }
 
     main {
-      text-align: left;
-      padding: 8px 0;
+      overflow-y: scroll;
     }
 
     footer {

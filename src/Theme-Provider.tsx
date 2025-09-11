@@ -1,5 +1,5 @@
 import React, { type JSX } from "react";
-import "./base.scss";
+import "./atoms/base.scss";
 
 type Theme = "light" | "dark";
 

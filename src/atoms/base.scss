@@ -1,7 +1,5 @@
-/* Declare the global order ONCE */
 @layer reset, tokens, base, components, utilities;
 
-/* ===== Reset ===== */
 @layer reset {
   *,
   *::before,
@@ -26,7 +24,6 @@
   }
 }
 
-/* ===== Tokens ===== */
 @layer tokens {
   :root {
     /* Palette */
@@ -58,12 +55,10 @@
     --radius: 12px;
   }
 
-  /* Optional dark theme (scoped via Provider’s data-theme) */
   [data-theme="dark"] {
   }
 }
 
-/* ===== Base ===== */
 @layer base {
   html,
   body {
@@ -73,19 +68,13 @@
     line-height: 1.5;
   }
 
-  /* Keep layout off body; scope to your app root instead */
   #root {
     max-width: var(--container-max-width);
     margin: 0 auto;
     padding: 2rem;
-    text-align: center;
   }
 }
 
-/* ===== Components / Utilities (append from modules) ===== */
-@layer components {
-  /* component styles append here from .module.scss */
-}
 @layer utilities {
   /* small helpers */
 }

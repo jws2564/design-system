@@ -3,11 +3,10 @@ import { FormField } from "./form-field";
 import { TextInput } from "../../elements/text-input/text-input";
 import { MenuInput } from "../../organisms/menu-input/menu-input.tsx";
 import { fn } from "storybook/test";
-import React from "react";
 
 const menuInput = (
   <MenuInput
-    selectedListIemId="1"
+    selectedListItemId="1"
     labelText="Menu Input"
     onSelectCallback={() => fn}
     items={[
@@ -27,20 +26,24 @@ const meta: Meta<typeof FormField> = {
   argTypes: {
     labelText: {
       control: "text",
+      type: "string",
       description: "Label to display above the input element.",
     },
     className: {
       control: "text",
+      type: "string",
       description: "CSS classname to apply",
     },
     labelFor: {
       control: "text",
+      type: "string",
       description: "Value to set as the for attribute on the label",
     },
     field: {
       control: { type: "select" },
       description: "Accepts a component of type MenuItem or TextInput",
       options: ["MenuInput", "TextInput"],
+      table: { type: { summary: "MenuInput | TextInput" } },
       mapping: {
         MenuInput: menuInput,
         TextInput: <TextInput placeholder="Enter Text" />,
@@ -55,14 +58,12 @@ type Story = StoryObj<typeof FormField>;
 export const Default: Story = {
   args: {
     labelText: "Text Input Form Field",
-    field: "TextInput",
   },
 };
 
 export const MenuInputField: Story = {
   args: {
     labelText: "Text Input Form Field",
-    field: "MenuInput",
   },
   decorators: [
     (Story) => (

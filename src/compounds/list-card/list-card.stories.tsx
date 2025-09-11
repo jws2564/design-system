@@ -63,14 +63,14 @@ const meta: Meta<typeof ListCard> = {
       mapping: iconMapping,
       control: { type: "radio" },
       description: "Icon shown when `selected` is true",
-      type: Icon,
+      table: { type: { summary: "Icon" } },
     },
     badge: {
       options: Object.keys(badgeMapping),
       mapping: badgeMapping,
       control: { type: "radio" },
       description: "Optional badge element to show before the label",
-      type: Label,
+      table: { type: { summary: "Label" } },
     },
   },
 };

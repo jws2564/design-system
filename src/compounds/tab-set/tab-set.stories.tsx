@@ -23,7 +23,7 @@ const meta: Meta<typeof TabSet> = {
     tabs: {
       control: "object",
       description: "`Array containing the list of tabs to display`",
-      type: "Tab[]",
+      table: { type: { summary: "Tab[]" } },
     },
     onSelectCallback: {
       action: "selected",
