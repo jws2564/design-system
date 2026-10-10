@@ -33,12 +33,13 @@
     --color-lighter-gray: #f9f9f9;
     --color-light-gray: #eeeeee;
     --color-gray: #d9d9d9;
-    --color-gray-dark: #828282;
+    --color-gray-dark: #596660;
     --color-black: #000000;
     --color-white: #ffffff;
 
     /* Semantic */
     --color-primary: var(--color-green);
+    --color-primary-hover: #006f5d;
     --color-border: var(--color-gray);
     --text-color: var(--color-black);
     --bg-color: #ffffff;
@@ -53,6 +54,7 @@
     --space-2: 0.5rem;
     --space-3: 1rem;
     --radius: 12px;
+    --focus-ring: 0 0 0 3px rgb(0 134 110 / 18%);
   }
 
   [data-theme="dark"] {
@@ -66,6 +68,11 @@
     background: var(--bg-color);
     font-family: var(--font-sans);
     line-height: 1.5;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
   }
 
   #root {

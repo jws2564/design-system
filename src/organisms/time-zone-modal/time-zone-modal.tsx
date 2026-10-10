@@ -8,10 +8,16 @@ import { getTimeZones } from "@vvo/tzdb";
 import type { ListItem } from "../../compounds/list-card/list-card.tsx";
 import styles from "./time-zone-modal.module.scss";
 
+export interface TimeZoneFormValues {
+  name: string;
+  timeZone: string;
+}
+
 interface Props {
-  onSaveCallback?: () => void;
+  onSaveCallback?: (values: TimeZoneFormValues) => void;
   onCloseCallback: () => void;
   isOpen: boolean;
+  defaultName?: string;
   defaultTimeZone?: string;
   timeZoneList?: ListItem[];
 }
@@ -28,17 +34,18 @@ export const TimeZoneModal: React.FC<Props> = ({
   onSaveCallback,
   onCloseCallback,
   isOpen,
+  defaultName = "",
   defaultTimeZone = "",
   timeZoneList = timeZones,
 }) => {
   const [state, setState] = useState({
-    name: "",
-    timeZone: defaultTimeZone,
+    name: defaultName,
+    timeZone: defaultTimeZone || timeZoneList[0]?.id || "",
   });
 
   const onSave = () => {
     if (onSaveCallback) {
-      onSaveCallback();
+      onSaveCallback(state);
     }
     onCloseCallback();
   };
@@ -48,6 +55,7 @@ export const TimeZoneModal: React.FC<Props> = ({
       id="time-zone-modal"
       isOpen={isOpen}
       showCloseButton={true}
+      closeCallback={onCloseCallback}
       footerPrimaryButton={
         <Button
           onClick={onSave}
@@ -60,9 +68,12 @@ export const TimeZoneModal: React.FC<Props> = ({
       <div className={styles.container}>
         <div>
           <FormField
+            labelFor="time-zone-name"
             field={
               <TextInput
+                id="time-zone-name"
                 placeholder="Your Name"
+                value={state.name}
                 onChange={(e) => setState({ ...state, name: e.target.value })}
               />
             }
@@ -71,8 +82,10 @@ export const TimeZoneModal: React.FC<Props> = ({
         </div>
         <div>
           <FormField
+            labelFor="time-zone-select"
             field={
               <MenuInput
+                id="time-zone-select"
                 onSelectCallback={(listItem) =>
                   setState({ ...state, timeZone: listItem.id })
                 }

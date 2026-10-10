@@ -3,6 +3,18 @@ import { ThemeProvider } from "../src/Theme-Provider.tsx";
 
 const preview: Preview = {
   parameters: {
+    options: {
+      storySort: {
+        order: [
+          "Introduction",
+          "Atoms",
+          "Elements",
+          "Mixtures",
+          "Compounds",
+          "Organisms",
+        ],
+      },
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,
@@ -11,16 +23,24 @@ const preview: Preview = {
     },
 
     a11y: {
-      // 'todo' - show a11y violations in the test UI only
-      // 'error' - fail CI on a11y violations
-      // 'off' - skip a11y checks entirely
-      test: "todo",
+      test: "error",
+    },
+    backgrounds: {
+      default: "Canvas",
+      values: [
+        { name: "Canvas", value: "#f6f8f7" },
+        { name: "White", value: "#ffffff" },
+        { name: "Dark", value: "#17211f" },
+      ],
+    },
+    docs: {
+      toc: true,
     },
   },
   decorators: [
     (Story) => {
       return (
-        <ThemeProvider as="main">
+        <ThemeProvider as="div" style={{ minHeight: "100%" }}>
           <Story />
         </ThemeProvider>
       );

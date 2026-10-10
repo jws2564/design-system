@@ -4,16 +4,17 @@ import {
 } from "../../compounds/list-card/list-card.tsx";
 import { Icon } from "../../elements/icon/icon.tsx";
 import styles from "./menu-input.module.scss";
-import React, { useMemo, useRef, useState } from "react";
+import React, { useCallback, useId, useMemo, useRef, useState } from "react";
 import { type Tab, TabSet } from "../../compounds/tab-set/tab-set.tsx";
 import { TextInput } from "../../elements/text-input/text-input.tsx";
 import { FormField } from "../../compounds/form-field/form-field.tsx";
 import ReactDOM from "react-dom";
-import { useMenuPosition } from "./use-menu-position.tsx"; // 👈 new hook import
+import { useMenuPosition } from "./use-menu-position.tsx";
 
 export interface Props {
+  id?: string;
   items: ListItem[];
-  selectedListItemId: string; //must be unique if
+  selectedListItemId: string; //must be unique id
   onSelectCallback: (item: ListItem) => void;
   categoryTabList?: Tab[];
   defaultCategoryId?: string;
@@ -24,6 +25,7 @@ export interface Props {
 }
 
 export const MenuInput: React.FC<Props> = ({
+  id,
   items,
   selectedListItemId,
   onSelectCallback,
@@ -38,22 +40,25 @@ export const MenuInput: React.FC<Props> = ({
   const [searchText, setSearchText] = useState("");
   const [mountNode, setMountNode] = React.useState<HTMLElement | null>(null);
 
-  const getDefaultCategoryId = () =>
+  const generatedId = useId();
+  const triggerId = id ?? `menu-input-${generatedId}`;
+  const menuId = `${triggerId}-listbox`;
+  const resolvedDefaultCategoryId =
     defaultCategoryId ?? categoryTabList?.[0]?.id ?? "";
 
   const [filterCategoryId, setFilterCategoryId] = useState(
-    getDefaultCategoryId(),
+    resolvedDefaultCategoryId,
   );
 
-  const menuTriggerRef = useRef<HTMLDivElement>(null);
+  const menuTriggerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
   const openMenu = () => setMenuOpen(true);
-  const closeMenu = () => {
+  const closeMenu = useCallback(() => {
     setSearchText("");
-    setFilterCategoryId(getDefaultCategoryId());
+    setFilterCategoryId(resolvedDefaultCategoryId);
     setMenuOpen(false);
-  };
+  }, [resolvedDefaultCategoryId]);
   const toggleMenu = () => (menuOpen ? closeMenu() : openMenu());
 
   // Fast lookup by stable id
@@ -65,10 +70,13 @@ export const MenuInput: React.FC<Props> = ({
 
   const selectedItem = itemByValue.get(selectedListItemId) ?? items[0];
 
-  const handleListItemSelection = (listItem: ListItem) => {
-    onSelectCallback(listItem);
-    if (closeOnSelect) closeMenu();
-  };
+  const handleListItemSelection = useCallback(
+    (listItem: ListItem) => {
+      onSelectCallback(listItem);
+      if (closeOnSelect) closeMenu();
+    },
+    [closeMenu, closeOnSelect, onSelectCallback],
+  );
 
   const handleCategorySelection = (tab: Tab) => {
     setFilterCategoryId(tab.id);
@@ -146,14 +154,27 @@ export const MenuInput: React.FC<Props> = ({
   });
 
   const menu = menuOpen && (
-    <div ref={menuRef} className={menuListClasses} style={menuStyle}>
+    <div
+      id={menuId}
+      ref={menuRef}
+      className={menuListClasses}
+      style={menuStyle}
+    >
       {enableSearch && searchFilter}
       {categoryTabList && tabSet}
       <ul role="listbox">
         {filteredItems.map((item) => (
           <li
             role="option"
+            aria-selected={selectedListItemId === item.id}
+            tabIndex={0}
             onClick={() => handleListItemSelection(item)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                handleListItemSelection(item);
+              }
+            }}
             key={item.id}
           >
             <ListCard {...item} selected={selectedListItemId === item.id} />
@@ -164,7 +185,10 @@ export const MenuInput: React.FC<Props> = ({
   );
 
   React.useEffect(() => {
-    setMountNode(document.getElementById("theme-root") ?? document.body);
+    setMountNode(
+      menuTriggerRef.current?.closest<HTMLElement>("[data-theme]") ??
+        document.body,
+    );
   }, []);
 
   React.useEffect(() => {
@@ -184,10 +208,24 @@ export const MenuInput: React.FC<Props> = ({
 
   return (
     <>
-      <div
+      <button
+        id={triggerId}
+        type="button"
+        aria-controls={menuId}
+        aria-expanded={menuOpen}
+        aria-haspopup="listbox"
+        aria-label={labelText}
         onClick={toggleMenu}
+        onKeyDown={(event) => {
+          if (event.key === "ArrowDown") {
+            event.preventDefault();
+            openMenu();
+          }
+          if (event.key === "Escape") {
+            closeMenu();
+          }
+        }}
         ref={menuTriggerRef}
-        tabIndex={0}
         className={menuInputClasses}
       >
         <div className={styles["selected-card-container"]}>
@@ -206,7 +244,7 @@ export const MenuInput: React.FC<Props> = ({
         <div className={styles["menu-input-icon-wrapper"]}>
           <Icon name="downArrow" />
         </div>
-      </div>
+      </button>
       {mountNode && ReactDOM.createPortal(menu, mountNode)}
     </>
   );

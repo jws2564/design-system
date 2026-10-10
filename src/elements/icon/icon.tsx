@@ -22,6 +22,7 @@ export type IconProps = {
 
 //TODO figure out how to make changing the color on the svg path easier
 //TODO possibly do some lazy loading here to help with bundle size
+//React.lazy(() => import("./icons/clear.tsx").then((m) => ({ default: m.Clear })))
 const icons: Record<IconName, React.FC> = {
   clear: Clear,
   downArrow: DownArrow,

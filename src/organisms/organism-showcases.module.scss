@@ -1,0 +1,60 @@
+.launch {
+  display: grid;
+  width: 100%;
+  max-width: 560px;
+  gap: 16px;
+  justify-items: center;
+}
+
+.flowCard {
+  display: grid;
+  width: 100%;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 22px;
+  border: 1px solid rgb(23 33 31 / 9%);
+  border-radius: 16px;
+  background: var(--color-white);
+  box-shadow: 0 12px 34px rgb(24 67 57 / 9%);
+}
+
+.step {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--color-primary-hover);
+  background: var(--color-light-green);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.flowCard strong,
+.flowCard > div > span {
+  display: block;
+}
+
+.flowCard strong {
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+
+.flowCard > div > span {
+  color: var(--color-gray-dark);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.flowCard .step {
+  display: grid;
+  place-items: center;
+}
+
+@media (max-width: 520px) {
+  .flowCard {
+    padding: 16px;
+  }
+}

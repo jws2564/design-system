@@ -4,4 +4,8 @@
   > div {
     margin-bottom: 8px;
   }
+
+  @media (max-width: 520px) {
+    width: min(400px, calc(100vw - 64px));
+  }
 }

@@ -1,4 +1,4 @@
-import React, { useId } from "react";
+import React from "react";
 import { Icon } from "../icon/icon.tsx";
 import styles from "./text-input.module.scss";
 
@@ -17,8 +17,6 @@ export const TextInput: React.FC<TextInputProps> = ({
   onClearCallback,
   ...inputAttributes
 }) => {
-  const reactId = useId();
-  const inputId = inputAttributes.id ?? `input-${reactId}`;
   const hasClearButton = showClearButton && !!onClearCallback;
   const classes = [
     styles["text-input-wrapper"],
@@ -29,15 +27,14 @@ export const TextInput: React.FC<TextInputProps> = ({
 
   return (
     <div className={classes}>
-      <input {...inputAttributes} type="text" id={inputId} />
+      <input {...inputAttributes} type="text" />
       {hasClearButton && (
-        <button type="button" onClick={onClearCallback}>
-          <Icon
-            name="clear"
-            aria-hidden
-            style={{ pointerEvents: "none" }}
-            size="large"
-          />
+        <button
+          type="button"
+          aria-label="Clear text"
+          onClick={onClearCallback}
+        >
+          <Icon name="clear" size="large" aria-hidden="true" />
         </button>
       )}
     </div>

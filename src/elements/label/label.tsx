@@ -1,3 +1,4 @@
+import React from "react";
 import styles from "./label.module.scss";
 
 export type LabelProps = React.HTMLAttributes<HTMLSpanElement> & {

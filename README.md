@@ -1,69 +1,45 @@
-# React + TypeScript + Vite
+# Composable UI System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React and TypeScript component library that explores how small, reusable interface primitives can be composed into complete form workflows. Storybook is the primary documentation and review surface.
 
-Currently, two official plugins are available:
+## What this project demonstrates
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Token-led visual decisions for color, typography, spacing, and shape
+- Typed component APIs built with React and CSS Modules
+- Searchable and filterable menu inputs rendered through portals
+- Composed modal workflows with validation and responsive behavior
+- Storybook documentation, controls, interaction testing, and accessibility checks
 
-## Expanding the ESLint configuration
+The Storybook sidebar retains the atomic hierarchy required by the original interview exercise: **Atoms, Elements, Mixtures, Compounds, and Organisms**.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Run locally
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run storybook
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Storybook runs at `http://localhost:6006`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Quality checks
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run lint
+npm run build
+npm run build-storybook
+npm run test-storybook
 ```
+
+## Project structure
+
+```text
+src/
+  atoms/       Shared design tokens
+  elements/    Focused interface primitives
+  mixtures/    Components that combine multiple behaviors
+  compounds/   Reusable interface patterns
+  organisms/   Complete form workflows
+  stories/     Portfolio introduction and supporting assets
+```
+
+Start with the **Introduction** story for project context, then move through the required atomic hierarchy and finish with the organism examples.

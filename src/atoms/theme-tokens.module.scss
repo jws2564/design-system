@@ -1,0 +1,469 @@
+.page {
+  background:
+    radial-gradient(circle at 85% 4%, rgb(191 235 244 / 35%), transparent 24rem),
+    linear-gradient(180deg, #f8faf9 0%, #ffffff 32rem);
+  color: #17211f;
+  min-height: 100vh;
+  padding: clamp(32px, 5vw, 72px) clamp(20px, 4vw, 56px) 96px;
+}
+
+.shell {
+  margin: 0 auto;
+  max-width: 1160px;
+}
+
+.hero {
+  align-items: center;
+  display: grid;
+  gap: clamp(32px, 6vw, 88px);
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+  min-height: 430px;
+}
+
+.eyebrow,
+.sectionNumber {
+  color: var(--color-primary-hover);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  font-size: clamp(42px, 6vw, 76px);
+  letter-spacing: -0.055em;
+  line-height: 0.96;
+  margin: 18px 0 24px;
+  max-width: 760px;
+}
+
+.lede {
+  color: var(--color-gray-dark);
+  font-size: 18px;
+  line-height: 1.7;
+  margin: 0;
+  max-width: 690px;
+}
+
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.summary span {
+  background: rgb(255 255 255 / 78%);
+  border: 1px solid #dbe3e0;
+  border-radius: 999px;
+  color: #40504b;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 11px;
+}
+
+.heroComposition {
+  aspect-ratio: 1;
+  background: #e8f5f0;
+  border: 1px solid #cfe2dc;
+  border-radius: 50%;
+  box-shadow: 0 28px 80px rgb(0 111 93 / 12%);
+  max-width: 360px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.heroShapeLarge,
+.heroShapeMedium,
+.heroShapeSmall,
+.heroLine {
+  display: block;
+  position: absolute;
+}
+
+.heroShapeLarge {
+  background: var(--color-primary);
+  border-radius: 50%;
+  height: 54%;
+  left: -8%;
+  top: 34%;
+  width: 54%;
+}
+
+.heroShapeMedium {
+  background: var(--color-light-blue);
+  border: 10px solid #ffffff;
+  border-radius: var(--radius);
+  height: 38%;
+  right: 6%;
+  top: 10%;
+  transform: rotate(10deg);
+  width: 38%;
+}
+
+.heroShapeSmall {
+  background: #17211f;
+  border-radius: 50%;
+  bottom: 14%;
+  height: 18%;
+  right: 20%;
+  width: 18%;
+}
+
+.heroLine {
+  background: #ffffff;
+  height: 8px;
+  left: 25%;
+  top: 28%;
+  transform: rotate(-18deg);
+  width: 58%;
+}
+
+.content {
+  display: grid;
+  gap: 96px;
+  margin-top: 64px;
+}
+
+.sectionHeading {
+  align-items: end;
+  border-top: 1px solid #dbe3e0;
+  display: grid;
+  gap: 24px;
+  grid-template-columns: minmax(240px, 0.8fr) minmax(300px, 1.2fr);
+  margin-bottom: 30px;
+  padding-top: 22px;
+}
+
+.sectionHeading h2 {
+  font-size: clamp(26px, 3.5vw, 40px);
+  letter-spacing: -0.035em;
+  margin: 5px 0 0;
+}
+
+.sectionHeading > p {
+  color: var(--color-gray-dark);
+  line-height: 1.65;
+  margin: 0;
+  max-width: 620px;
+}
+
+.paletteGrid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.colorCard,
+.typeSpecimen,
+.weightSpecimen,
+.spacingCard,
+.detailCard {
+  background: rgb(255 255 255 / 88%);
+  border: 1px solid #dbe3e0;
+  border-radius: var(--radius);
+  box-shadow: 0 10px 30px rgb(23 33 31 / 4%);
+}
+
+.colorCard {
+  overflow: hidden;
+}
+
+.colorSwatch {
+  align-items: flex-end;
+  border-bottom: 1px solid rgb(23 33 31 / 10%);
+  display: flex;
+  height: 132px;
+  padding: 12px;
+}
+
+.colorSwatch span {
+  background: rgb(255 255 255 / 88%);
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
+  color: #17211f;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  padding: 4px 6px;
+}
+
+.colorContent {
+  padding: 15px 16px 17px;
+}
+
+.colorContent > div {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 12px;
+  justify-content: space-between;
+}
+
+.colorContent strong {
+  font-size: 14px;
+}
+
+.colorContent code,
+.semanticCard code,
+.specimenMeta code,
+.spacingRow code,
+.resolvedValue {
+  color: #52605c;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+}
+
+.colorContent p {
+  color: var(--color-gray-dark);
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 9px 0 0;
+}
+
+.semanticList {
+  background: #ffffff;
+  border: 1px solid #dbe3e0;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.semanticCard {
+  align-items: center;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 40px minmax(200px, 1fr) minmax(180px, auto);
+  padding: 16px 18px;
+}
+
+.semanticCard + .semanticCard {
+  border-top: 1px solid #e6ecea;
+}
+
+.semanticSwatch {
+  border: 1px solid rgb(23 33 31 / 12%);
+  border-radius: 8px;
+  height: 40px;
+  width: 40px;
+}
+
+.semanticCopy p {
+  color: var(--color-gray-dark);
+  font-size: 12px;
+  margin: 4px 0 0;
+}
+
+.semanticValue {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: right;
+}
+
+.semanticValue span {
+  color: #36433f;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+}
+
+.typeGrid,
+.layoutGrid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.typeSpecimen,
+.weightSpecimen,
+.spacingCard,
+.detailCard {
+  padding: 22px;
+}
+
+.specimenMeta {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.specimenMeta > span:first-child {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.displaySample {
+  font-size: clamp(86px, 12vw, 150px);
+  font-weight: 500;
+  letter-spacing: -0.08em;
+  line-height: 0.9;
+  margin: 48px 0 34px;
+}
+
+.alphabetSample {
+  color: #36433f;
+  font-size: clamp(12px, 1.6vw, 16px);
+  letter-spacing: 0.08em;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+.resolvedValue {
+  display: block;
+  margin-top: 20px;
+  overflow-wrap: anywhere;
+}
+
+.weightSample {
+  display: grid;
+  font-size: clamp(22px, 3vw, 34px);
+  gap: 28px;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin: 68px 0 70px;
+}
+
+.weightSample span {
+  color: var(--color-gray-dark);
+  font-weight: 400;
+}
+
+.weightSample strong {
+  font-weight: var(--font-weight-medium);
+}
+
+.detailGrid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.spacingList {
+  display: grid;
+  gap: 22px;
+  margin-top: 38px;
+}
+
+.spacingRow {
+  align-items: center;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 120px minmax(0, 1fr);
+}
+
+.spacingRow strong,
+.spacingRow code {
+  display: block;
+}
+
+.spacingRow strong {
+  font-size: 13px;
+  margin-bottom: 3px;
+}
+
+.spacingMeasure {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+}
+
+.spacingBar {
+  background: var(--color-primary);
+  border-radius: 999px;
+  display: block;
+  height: 12px;
+  min-width: 10px;
+}
+
+.radiusPreview,
+.focusPreview {
+  align-items: center;
+  background: #f5f8f7;
+  display: flex;
+  font-size: 13px;
+  font-weight: 600;
+  justify-content: center;
+  min-height: 142px;
+  margin-top: 30px;
+}
+
+.radiusPreview {
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius);
+}
+
+.focusPreview {
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  box-shadow: var(--focus-ring);
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+@media (max-width: 860px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .heroComposition {
+    max-width: 280px;
+  }
+
+  .paletteGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sectionHeading,
+  .typeGrid,
+  .layoutGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .page {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .hero {
+    min-height: auto;
+  }
+
+  .heroComposition {
+    max-width: 220px;
+  }
+
+  .content {
+    gap: 72px;
+  }
+
+  .paletteGrid,
+  .detailGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .semanticCard {
+    align-items: start;
+    grid-template-columns: 36px minmax(0, 1fr);
+  }
+
+  .semanticSwatch {
+    height: 36px;
+    width: 36px;
+  }
+
+  .semanticValue {
+    align-items: flex-start;
+    grid-column: 2;
+    text-align: left;
+  }
+
+  .spacingRow {
+    grid-template-columns: 96px minmax(0, 1fr);
+  }
+}

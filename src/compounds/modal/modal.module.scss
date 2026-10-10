@@ -6,8 +6,9 @@
     flex-direction: column;
     max-width: 90vw;
     max-height: 90vh;
-    padding: 8px 12px;
+    padding: 16px 18px;
     background: var(--color-white);
+    box-shadow: 0 24px 70px rgb(23 33 31 / 18%);
     position: fixed;
     top: 50%;
     left: 50%;
@@ -26,20 +27,35 @@
       justify-content: space-between;
       gap: 8px;
       .close-button {
-        position: relative;
-        top: -8px;
+        align-items: center;
+        background: transparent;
+        border: 0;
+        border-radius: 6px;
+        color: var(--color-gray-dark);
         cursor: pointer;
+        display: inline-flex;
+        height: 32px;
+        justify-content: center;
+        margin: -6px -8px 0 0;
+        padding: 4px;
+        width: 32px;
+
+        &:hover {
+          background: var(--color-lighter-gray);
+          color: var(--color-black);
+        }
       }
     }
 
-    main {
-      overflow-y: scroll;
+    .body {
+      overflow-y: auto;
     }
 
     footer {
       display: flex;
       gap: 8px;
       justify-content: flex-end;
+      padding-top: 12px;
     }
   }
 }

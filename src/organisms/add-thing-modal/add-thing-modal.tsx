@@ -16,7 +16,7 @@ const tabs = [
   },
   {
     id: "2",
-    label: "Choose from Template",
+    label: "Use Example",
     type: "button",
   },
 ];
@@ -24,113 +24,127 @@ const tabs = [
 const itemsForTypeField = [
   {
     id: "1",
-    value: "cool-thing-value-1",
-    label: "Cool Thing",
-    description: "Has user generated description that is long",
+    value: "product-designer",
+    label: "Product Designer",
+    description: "Design and research",
     categoryId: "1",
   },
   {
     id: "2",
-    value: "option-2",
-    label: "Option",
-    description: "Has user generated description that is long",
+    value: "content-designer",
+    label: "Content Designer",
+    description: "Content and UX writing",
     categoryId: "1",
   },
   {
     id: "3",
-    value: "option-3",
-    label: "Option",
+    value: "software-engineer",
+    label: "Software Engineer",
+    description: "Product engineering",
     categoryId: "1",
   },
   {
     id: "4",
-    value: "option-4",
-    label: "Option",
-    categoryId: "1",
-  },
-  {
-    id: "5",
-    value: "option-5",
-    label: "Option",
-    categoryId: "1",
-  },
-  {
-    id: "6",
-    value: "option-6",
-    label: "Option",
-    description: "This is an option for category 2",
+    value: "product-manager",
+    label: "Product Manager",
+    description: "Product strategy and delivery",
     categoryId: "2",
   },
 ];
 const itemsForTimeZoneField = [
   {
     id: "1",
-    value: "cool-thing-value-1",
-    label: "Cool Thing",
-    description: "Has user generated description that is long",
+    value: "America/Chicago",
+    label: "America/Chicago",
+    description: "Central Time",
     categoryId: "1",
     badge: (
       <Label
         style={{ background: "var(--color-light-green)" }}
-        text="My TIMEZONE cat 1"
+        text="UTC−6"
       />
     ),
   },
   {
     id: "2",
-    value: "option-2",
-    label: "Option",
-    description: "Has user generated description that is long",
+    value: "America/New_York",
+    label: "America/New_York",
+    description: "Eastern Time",
     categoryId: "1",
+    badge: <Label text="UTC−5" />,
   },
   {
     id: "3",
-    value: "option-3",
-    label: "Option",
+    value: "America/Los_Angeles",
+    label: "America/Los_Angeles",
+    description: "Pacific Time",
     categoryId: "1",
-  },
-  {
-    id: "4",
-    value: "option-4",
-    label: "Option",
-    categoryId: "1",
-  },
-  {
-    id: "5",
-    value: "option-5",
-    label: "Option",
-    categoryId: "1",
-  },
-  {
-    id: "6",
-    value: "option-6",
-    label: "Option",
-    description: "This is an option for category 2",
-    categoryId: "2",
+    badge: <Label text="UTC−8" />,
   },
 ];
 
-export const AddThingModal: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState(true);
-  const [formValues, setFormValues] = useState({
-    displayName: "",
-    type: "1",
-    timeZone: "1",
+export interface AddThingFormValues {
+  displayName: string;
+  type: string;
+  timeZone: string;
+}
+
+export interface AddThingModalProps {
+  isOpen?: boolean;
+  initialTabId?: "1" | "2";
+  initialValues?: Partial<AddThingFormValues>;
+  onCloseCallback?: () => void;
+  onSubmitCallback?: (values: AddThingFormValues) => void;
+}
+
+const defaultValues: AddThingFormValues = {
+  displayName: "",
+  type: "1",
+  timeZone: "1",
+};
+
+export const AddThingModal: React.FC<AddThingModalProps> = ({
+  isOpen = true,
+  initialTabId = "1",
+  initialValues,
+  onCloseCallback,
+  onSubmitCallback,
+}) => {
+  const [isModalOpen, setIsModalOpen] = useState(isOpen);
+  const [formValues, setFormValues] = useState<AddThingFormValues>({
+    ...defaultValues,
+    ...initialValues,
   });
-  const [selectedTabId, setSelectedTabId] = useState("1");
-  const formValid =
-    formValues.displayName && formValues.type && formValues.timeZone;
-  const closeModal = () => setIsModalOpen(false);
-  const handleTabClick = (id: string) => setSelectedTabId(id);
+  const [selectedTabId, setSelectedTabId] = useState(initialTabId);
+  const formValid = Boolean(
+    formValues.displayName && formValues.type && formValues.timeZone,
+  );
+  const closeModal = () => {
+    setIsModalOpen(false);
+    onCloseCallback?.();
+  };
+  const handleTabClick = (id: string) => {
+    if (id === "1" || id === "2") setSelectedTabId(id);
+  };
+  const applyExample = (values: AddThingFormValues) => {
+    setFormValues(values);
+    setSelectedTabId("1");
+  };
 
   return (
     <Modal
-      id="Add Anything"
-      title="Add One of Your Custom Things"
+      id="add-team-member"
+      title="Add a team member"
       isOpen={isModalOpen}
       showCloseButton={true}
       closeCallback={closeModal}
-      footerPrimaryButton={<Button text="Add Thing" disabled={!formValid} />}
+      footerPrimaryButton={
+        <Button
+          text="Add member"
+          disabled={!formValid}
+          onClick={() => onSubmitCallback?.(formValues)}
+        />
+      }
       footerSecondaryButton={
         <Button onClick={closeModal} variant="secondary" text="Cancel" />
       }
@@ -152,28 +166,30 @@ export const AddThingModal: React.FC = () => {
                 <FormField
                   className={styles["display-name"]}
                   labelFor="display-name"
-                  labelText="Display Name"
+                  labelText="Display name"
                   field={
                     <TextInput
-                      placeholder="Enter Name"
+                      placeholder="e.g. Morgan Lee"
                       id="display-name"
                       name="display-name"
-                      onChange={(e) =>
+                      value={formValues.displayName}
+                      onChange={(event) =>
                         setFormValues({
                           ...formValues,
-                          displayName: e.target.value,
+                          displayName: event.target.value,
                         })
                       }
                     />
                   }
                 />
                 <FormField
-                  labelFor="type"
-                  labelText="Type"
+                  labelFor="team-role"
+                  labelText="Role"
                   className={styles.type}
                   field={
                     <MenuInput
-                      labelText="Type"
+                      id="team-role"
+                      labelText="Role"
                       items={itemsForTypeField}
                       selectedListItemId={formValues.type}
                       onSelectCallback={(listItem) => {
@@ -181,25 +197,29 @@ export const AddThingModal: React.FC = () => {
                       }}
                       enableSearch={true}
                       categoryTabList={[
-                        { id: "1", label: "SubCat 1" },
-                        { id: "2", label: "SubCat 2" },
+                        { id: "1", label: "Design & Engineering" },
+                        { id: "2", label: "Product" },
                       ]}
-                      defaultCategoryId={"1"}
+                      defaultCategoryId="1"
                     />
                   }
                 />
               </div>
               <div className={styles.row}>
                 <FormField
-                  labelFor="timezone"
-                  labelText="Time Zone"
+                  labelFor="team-time-zone"
+                  labelText="Time zone"
                   field={
                     <MenuInput
-                      labelText="Time Zone"
+                      id="team-time-zone"
+                      labelText="Time zone"
                       items={itemsForTimeZoneField}
                       selectedListItemId={formValues.timeZone}
                       onSelectCallback={(listItem) => {
-                        setFormValues({ ...formValues, timeZone: listItem.id });
+                        setFormValues({
+                          ...formValues,
+                          timeZone: listItem.id,
+                        });
                       }}
                       showSelectedCardDescription={true}
                     />
@@ -208,7 +228,38 @@ export const AddThingModal: React.FC = () => {
               </div>
             </div>
           )}
-          {selectedTabId === "2" && <div>TODO</div>}
+          {selectedTabId === "2" && (
+            <div className={styles["template-list"]}>
+              <button
+                className={styles["template-card"]}
+                type="button"
+                onClick={() =>
+                  applyExample({
+                    displayName: "Morgan Lee",
+                    type: "1",
+                    timeZone: "1",
+                  })
+                }
+              >
+                <strong>Remote designer</strong>
+                <span>Product Designer · Central Time</span>
+              </button>
+              <button
+                className={styles["template-card"]}
+                type="button"
+                onClick={() =>
+                  applyExample({
+                    displayName: "Avery Chen",
+                    type: "4",
+                    timeZone: "2",
+                  })
+                }
+              >
+                <strong>Product lead</strong>
+                <span>Product Manager · Eastern Time</span>
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </Modal>

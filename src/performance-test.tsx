@@ -1,5 +1,4 @@
 import { useMemo, useState } from "react";
-// Adjust these import paths to match your project structure:
 import { getTimeZones } from "@vvo/tzdb";
 import { TimeZoneModal } from "./organisms/time-zone-modal/time-zone-modal.tsx";
 import type { ListItem } from "./compounds/list-card/list-card.tsx";
@@ -14,11 +13,7 @@ export default function PerformanceTestPage() {
     // Normalize to a string label seed from whatever getTimeZones() returns.
     const seed: string[] =
       baseList.length > 0
-        ? baseList.map((z: any) =>
-            typeof z === "string"
-              ? z
-              : (z.name ?? z.label ?? z.id ?? "Etc/UTC"),
-          )
+        ? baseList.map((zone) => zone.name)
         : ["Etc/UTC", "America/New_York", "Europe/London", "Asia/Tokyo"];
 
     const target = 100_000;
@@ -99,7 +94,6 @@ export default function PerformanceTestPage() {
               <TimeZoneModal
                 isOpen={true}
                 onCloseCallback={() => closeModal(i)}
-                // If your modal expects a different prop name (e.g., `items`, `options`), rename this prop accordingly.
                 timeZoneList={bigTimeZones}
               />
             ) : null}

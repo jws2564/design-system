@@ -4,28 +4,21 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Modal } from "./modal.tsx";
 import { Button } from "../../elements/button/button.tsx";
 import { fn } from "storybook/test";
-
-const ensureThemeRoot = (Story: React.FC) => {
-  if (!document.getElementById("theme-root")) {
-    const root = document.createElement("main");
-    root.id = "theme-root";
-    // Optional but handy so the overlay isn't cramped in Docs
-    root.style.minHeight = "200px";
-    root.style.position = "relative";
-    document.body.appendChild(root);
-  }
-  return <Story />;
-};
+import { ElementShowcase } from "../../elements/element-showcase.tsx";
+import showcaseStyles from "../compound-showcases.module.scss";
 
 const meta: Meta<typeof Modal> = {
   title: "Compounds/Modal",
   component: Modal,
   tags: ["autodocs"],
-  decorators: [ensureThemeRoot],
   parameters: {
-    layout: "padded",
+    layout: "fullscreen",
     docs: {
-      story: { inline: false },
+      story: { inline: false, height: "720px" },
+      description: {
+        component:
+          "A controlled dialog shell with optional title, close control, scrollable body, and two-action footer. Content and open state stay with the parent workflow.",
+      },
     },
   },
   args: {
@@ -74,7 +67,78 @@ export default meta;
 
 type Story = StoryObj<typeof Modal>;
 
+const ModalController = ({
+  showcase = false,
+  ...args
+}: React.ComponentProps<typeof Modal> & { showcase?: boolean }) => {
+  const [open, setOpen] = React.useState(args.isOpen);
+  React.useEffect(() => setOpen(args.isOpen), [args.isOpen]);
+
+  const trigger = (
+    <Button
+      text={open ? "Close modal" : "Open modal"}
+      onClick={() => setOpen((value) => !value)}
+    />
+  );
+
+  return (
+    <>
+      {showcase ? (
+        <div className={showcaseStyles.modalDemo}>
+          <div className={showcaseStyles.modalPanel}>
+            <p>
+              The dialog is controlled by its parent and rendered in a portal
+              above the current workflow.
+            </p>
+          </div>
+          {trigger}
+        </div>
+      ) : (
+        <div style={{ padding: 16 }}>{trigger}</div>
+      )}
+      <Modal
+        {...args}
+        isOpen={open}
+        closeCallback={() => {
+          setOpen(false);
+          args.closeCallback?.();
+        }}
+      />
+    </>
+  );
+};
+
+export const Primary: Story = {
+  args: {
+    isOpen: false,
+    title: "Confirm selection",
+    children: (
+      <div style={{ width: 350, padding: "8px 0 16px" }}>
+        Review the selection before continuing.
+      </div>
+    ),
+    footerSecondaryButton: <Button text="Cancel" variant="secondary" />,
+    footerPrimaryButton: <Button text="Confirm" variant="primary" />,
+  },
+  render: (args) => (
+    <ElementShowcase
+      eyebrow="Compounds / Overlay"
+      title="Modal"
+      description="A focused layer for decisions that need context, supporting content, and an explicit path forward or back."
+      marker="C"
+      facts={[
+        { label: "Element", value: "Native <dialog>" },
+        { label: "Structure", value: "Header · Body · Footer" },
+        { label: "State", value: "Parent controlled" },
+      ]}
+    >
+      <ModalController {...args} showcase />
+    </ElementShowcase>
+  ),
+};
+
 export const SimpleModal: Story = {
+  parameters: { layout: "padded" },
   args: {
     title: "Simple Modal",
     showCloseButton: false,
@@ -84,27 +148,8 @@ export const SimpleModal: Story = {
 };
 
 export const Playground: Story = {
-  render: (args) => {
-    const [open, setOpen] = React.useState(args.isOpen);
-    React.useEffect(() => setOpen(args.isOpen), [args.isOpen]);
-
-    return (
-      <div style={{ padding: 16 }}>
-        <Button
-          text={open ? "Close modal" : "Open modal"}
-          onClick={() => setOpen((v) => !v)}
-        />
-        <Modal
-          {...args}
-          isOpen={open}
-          closeCallback={() => {
-            setOpen(false);
-            args.closeCallback?.();
-          }}
-        />
-      </div>
-    );
-  },
+  parameters: { layout: "padded" },
+  render: (args) => <ModalController {...args} />,
 };
 
 export const WithFooterButtons: Story = {
@@ -130,13 +175,18 @@ export const WithFooterButtons: Story = {
     ),
   },
   render: Playground.render,
+  parameters: { layout: "padded" },
 };
 
 export const WithScroll: Story = {
   args: {
     title: "20 Lines of Text",
     children: (
-      <div style={{ overflowY: "auto", height: 250 }}>
+      <div
+        aria-label="Scrollable example content"
+        style={{ overflowY: "auto", height: 250 }}
+        tabIndex={0}
+      >
         {Array.from({ length: 20 }).map((_, i) => (
           <p style={{ margin: "0" }} key={i}>
             Line {i + 1}: Lorem ipsum dolor sit amet, consectetur adipiscing
@@ -147,4 +197,5 @@ export const WithScroll: Story = {
     ),
   },
   render: Playground.render,
+  parameters: { layout: "padded" },
 };

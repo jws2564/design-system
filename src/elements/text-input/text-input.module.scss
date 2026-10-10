@@ -10,8 +10,16 @@
     font-size: 14px;
     line-height: normal;
     width: 100%;
+    transition: border-color 140ms ease, box-shadow 140ms ease;
+
+    &:focus {
+      border-color: var(--color-primary);
+      box-shadow: var(--focus-ring);
+      outline: none;
+    }
+
     &::placeholder {
-      color: var(--color-gray);
+      color: var(--color-gray-dark);
     }
   }
 
@@ -31,6 +39,10 @@
       position: absolute;
       right: 9px;
       top: 9px;
+
+      &:focus-visible {
+        border-radius: 4px;
+      }
     }
   }
 }

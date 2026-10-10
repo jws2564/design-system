@@ -1,0 +1,129 @@
+.portfolio-intro {
+  --intro-ink: #17211f;
+  --intro-muted: #5e6d68;
+  --intro-accent: #006f5d;
+  --intro-surface: #f2f7f5;
+  color: var(--intro-ink);
+  font-family: "Roboto", ui-sans-serif, system-ui, sans-serif;
+  max-width: 960px;
+  padding: 20px 8px 48px;
+}
+
+.portfolio-intro__eyebrow {
+  color: var(--intro-accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin: 0 0 12px;
+  text-transform: uppercase;
+}
+
+.portfolio-intro h1 {
+  font-size: clamp(36px, 7vw, 68px);
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+  margin: 0;
+  max-width: 780px;
+}
+
+.portfolio-intro__lede {
+  color: var(--intro-muted);
+  font-size: 19px;
+  line-height: 1.65;
+  margin: 24px 0 36px;
+  max-width: 720px;
+}
+
+.portfolio-intro__facts,
+.portfolio-intro__cards {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.portfolio-intro__fact,
+.portfolio-intro__card {
+  border: 1px solid #dbe3e0;
+  border-radius: 12px;
+  padding: 18px;
+}
+
+.portfolio-intro__fact {
+  background: var(--intro-surface);
+}
+
+.portfolio-intro__fact strong,
+.portfolio-intro__fact span {
+  display: block;
+}
+
+.portfolio-intro__fact strong {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.portfolio-intro__fact span,
+.portfolio-intro__card p,
+.portfolio-intro__section > p {
+  color: var(--intro-muted);
+  line-height: 1.6;
+}
+
+.portfolio-intro__section {
+  margin-top: 48px;
+}
+
+.portfolio-intro__section h2 {
+  font-size: 26px;
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+}
+
+.portfolio-intro__card h3 {
+  font-size: 16px;
+  margin: 0 0 8px;
+}
+
+.portfolio-intro__card p {
+  margin: 0;
+}
+
+.portfolio-intro__steps {
+  counter-reset: step;
+  display: grid;
+  gap: 12px;
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 0;
+}
+
+.portfolio-intro__steps li {
+  align-items: flex-start;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 32px 1fr;
+  line-height: 1.55;
+}
+
+.portfolio-intro__steps li::before {
+  align-items: center;
+  background: var(--intro-accent);
+  border-radius: 999px;
+  color: #ffffff;
+  content: counter(step);
+  counter-increment: step;
+  display: flex;
+  font-size: 12px;
+  font-weight: 700;
+  height: 28px;
+  justify-content: center;
+  margin-top: 1px;
+  width: 28px;
+}
+
+@media (max-width: 720px) {
+  .portfolio-intro__facts,
+  .portfolio-intro__cards {
+    grid-template-columns: 1fr;
+  }
+}

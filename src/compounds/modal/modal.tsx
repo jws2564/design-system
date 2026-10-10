@@ -1,4 +1,4 @@
-import React, { type ReactNode } from "react";
+import React, { type ReactNode, useEffect, useRef, useState } from "react";
 import { Icon } from "../../elements/icon/icon.tsx";
 import ReactDOM from "react-dom";
 import { Button } from "../../elements/button/button.tsx";
@@ -30,12 +30,20 @@ export const Modal: React.FC<ModalProps> = ({
   isOpen,
   closeCallback,
 }) => {
-  const rootElement = document.getElementById("theme-root") ?? document.body;
-  const mountingElement = typeof document !== "undefined" ? rootElement : null;
+  const portalAnchorRef = useRef<HTMLSpanElement>(null);
+  const [mountingElement, setMountingElement] = useState<HTMLElement | null>(
+    null,
+  );
 
-  if (!mountingElement || !isOpen) {
-    return <></>;
-  }
+  useEffect(() => {
+    const rootElement =
+      portalAnchorRef.current?.closest<HTMLElement>("[data-theme]") ??
+      document.body;
+    setMountingElement(typeof document !== "undefined" ? rootElement : null);
+  }, []);
+
+  if (!mountingElement || !isOpen)
+    return <span ref={portalAnchorRef} hidden />;
 
   const titleId = title ? `${id}-${title}` : undefined;
 
@@ -44,22 +52,23 @@ export const Modal: React.FC<ModalProps> = ({
       id={id}
       className={styles["modal-dialog"]}
       open={isOpen}
+      aria-modal="true"
       aria-labelledby={title ? titleId : undefined}
     >
       <header>
         {title && <h2 id={titleId}>{title}</h2>}
         {showCloseButton && (
-          <Icon
-            size={"large"}
+          <button
             className={styles["close-button"]}
             aria-label="Close"
             onClick={closeCallback}
             type="button"
-            name="clear"
-          />
+          >
+            <Icon size="large" name="clear" aria-hidden="true" />
+          </button>
         )}
       </header>
-      <main>{children}</main>
+      <div className={styles.body}>{children}</div>
       {(footerPrimaryButton || footerSecondaryButton) && (
         <footer>
           {footerSecondaryButton}
@@ -69,5 +78,10 @@ export const Modal: React.FC<ModalProps> = ({
     </dialog>
   );
 
-  return ReactDOM.createPortal(dialog, mountingElement);
+  return (
+    <>
+      <span ref={portalAnchorRef} hidden />
+      {ReactDOM.createPortal(dialog, mountingElement)}
+    </>
+  );
 };

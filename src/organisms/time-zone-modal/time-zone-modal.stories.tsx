@@ -4,22 +4,8 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { TimeZoneModal } from "./time-zone-modal.tsx";
 import { Button } from "../../elements/button/button.tsx";
 import { fn } from "storybook/test";
-
-// Decorator: ensure a portal target exists for the modal
-const ensureThemeRoot = (Story: React.FC) => {
-  if (
-    typeof document !== "undefined" &&
-    !document.getElementById("theme-root")
-  ) {
-    const root = document.createElement("div");
-    root.id = "theme-root";
-    // Give the canvas some vertical space so the dialog/backdrop isn’t cramped
-    root.style.minHeight = "700px";
-    root.style.position = "relative";
-    document.body.appendChild(root);
-  }
-  return <Story />;
-};
+import { ElementShowcase } from "../../elements/element-showcase.tsx";
+import storyStyles from "../organism-showcases.module.scss";
 
 // Best-effort default tz (falls back to empty string)
 const guessedTz =
@@ -31,16 +17,19 @@ const meta: Meta<typeof TimeZoneModal> = {
   title: "Organisms/Time Zone Modal",
   component: TimeZoneModal,
   tags: ["autodocs"],
-  decorators: [ensureThemeRoot],
   parameters: {
-    layout: "padded",
+    layout: "fullscreen",
     docs: {
-      story: { inline: false }, // render in iframe so height control applies
-      iframeHeight: 760,
+      story: { inline: false, height: "520px" },
+      description: {
+        component:
+          "A focused profile workflow that collects a person's name and IANA time zone. Searchable selection, validation, and save behavior are composed inside the shared modal pattern.",
+      },
     },
   },
   args: {
-    isOpen: true,
+    isOpen: false,
+    defaultName: "",
     defaultTimeZone: guessedTz,
     onSaveCallback: fn(() => "onSaveCallback"),
     onCloseCallback: fn(() => "onCloseCallback"),
@@ -52,6 +41,10 @@ const meta: Meta<typeof TimeZoneModal> = {
       description:
         "Initial selected time zone (IANA id, e.g. 'America/Chicago')",
     },
+    defaultName: {
+      control: "text",
+      description: "Initial value for the name field",
+    },
     onSaveCallback: { action: "save", table: { category: "events" } },
     onCloseCallback: { action: "close", table: { category: "events" } },
   },
@@ -60,38 +53,87 @@ export default meta;
 
 type Story = StoryObj<typeof TimeZoneModal>;
 
-/**
- * Stateful Playground: a button to open/close the modal and pass args through.
- * The modal itself manages “name” and “timeZone” state internally (per your component).
- */
-export const Playground: Story = {
-  render: (args) => {
-    const [open, setOpen] = React.useState<boolean>(args.isOpen);
+const TimeZoneController = ({
+  showcase = false,
+  ...args
+}: React.ComponentProps<typeof TimeZoneModal> & { showcase?: boolean }) => {
+  const [open, setOpen] = React.useState<boolean>(args.isOpen);
 
-    // Keep internal state in sync with Controls
-    React.useEffect(() => setOpen(args.isOpen), [args.isOpen]);
+  React.useEffect(() => setOpen(args.isOpen), [args.isOpen]);
 
-    return (
-      <div style={{ padding: 16, display: "grid", gap: 12 }}>
-        <div>
-          <Button
-            text={open ? "Close modal" : "Open modal"}
-            onClick={() => setOpen((v) => !v)}
-          />
+  const trigger = (
+    <Button
+      text={open ? "Close modal" : "Add profile details"}
+      onClick={() => setOpen((value) => !value)}
+    />
+  );
+
+  return (
+    <>
+      {showcase ? (
+        <div className={storyStyles.launch}>
+          <div className={storyStyles.flowCard}>
+            <span className={storyStyles.step}>01</span>
+            <div>
+              <strong>Complete profile details</strong>
+              <span>
+                Add a name and select a searchable IANA time zone before
+                saving.
+              </span>
+            </div>
+          </div>
+          {trigger}
         </div>
-        <TimeZoneModal
-          {...args}
-          isOpen={open}
-          onCloseCallback={() => {
-            setOpen(false);
-            args.onCloseCallback?.();
-          }}
-          onSaveCallback={() => {
-            args.onSaveCallback?.();
-            setOpen(false);
-          }}
-        />
-      </div>
-    );
+      ) : (
+        <div style={{ padding: 16 }}>{trigger}</div>
+      )}
+      <TimeZoneModal
+        {...args}
+        isOpen={open}
+        onCloseCallback={() => {
+          setOpen(false);
+          args.onCloseCallback?.();
+        }}
+        onSaveCallback={(values) => {
+          args.onSaveCallback?.(values);
+          setOpen(false);
+        }}
+      />
+    </>
+  );
+};
+
+export const Primary: Story = {
+  args: { isOpen: false },
+  parameters: { docs: { story: { height: "640px" } } },
+  render: (args) => (
+    <ElementShowcase
+      eyebrow="Organisms / Profile workflow"
+      title="Name and time zone"
+      description="A concise two-field workflow that combines searchable selection and validation inside the shared modal shell."
+      marker="O"
+      facts={[
+        { label: "Fields", value: "Name · Time zone" },
+        { label: "Data", value: "IANA time zones" },
+        { label: "Validation", value: "Save requires both" },
+      ]}
+    >
+      <TimeZoneController {...args} showcase />
+    </ElementShowcase>
+  ),
+};
+
+/** Stateful playground that keeps the external open state synchronized. */
+export const Playground: Story = {
+  parameters: { layout: "padded" },
+  render: (args) => <TimeZoneController {...args} />,
+};
+
+export const CompletedForm: Story = {
+  parameters: { layout: "padded" },
+  args: {
+    defaultName: "Morgan Lee",
+    defaultTimeZone: "America/Chicago",
   },
+  render: Playground.render,
 };

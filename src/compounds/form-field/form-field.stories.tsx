@@ -3,6 +3,8 @@ import { FormField } from "./form-field";
 import { TextInput } from "../../elements/text-input/text-input";
 import { MenuInput } from "../../mixtures/menu-input/menu-input.tsx";
 import { fn } from "storybook/test";
+import { ElementShowcase } from "../../elements/element-showcase.tsx";
+import showcaseStyles from "../compound-showcases.module.scss";
 
 const menuInput = (
   <MenuInput
@@ -20,6 +22,16 @@ const meta: Meta<typeof FormField> = {
   title: "Compounds/FormField",
   component: FormField,
   tags: ["autodocs"],
+  parameters: {
+    layout: "fullscreen",
+    docs: {
+      story: { inline: false, height: "720px" },
+      description: {
+        component:
+          "A field wrapper that creates a consistent label relationship around text and menu inputs. It centralizes spacing and native label association without owning input state.",
+      },
+    },
+  },
   args: {
     labelText: "Label",
   },
@@ -55,16 +67,53 @@ export default meta;
 
 type Story = StoryObj<typeof FormField>;
 
+export const Primary: Story = {
+  args: {
+    labelFor: "team-member-name",
+    labelText: "Team member name",
+    field: (
+      <TextInput id="team-member-name" placeholder="Enter a name" />
+    ),
+  },
+  render: (args) => (
+    <ElementShowcase
+      eyebrow="Compounds / Field structure"
+      title="Form field"
+      description="A label and its control become one reusable unit, keeping form structure predictable as individual inputs change."
+      marker="C"
+      facts={[
+        { label: "Composes", value: "Label · Input" },
+        { label: "Association", value: "Native htmlFor" },
+        { label: "State", value: "Owned by the field" },
+      ]}
+    >
+      <div className={showcaseStyles.fieldDemo}>
+        <div className={showcaseStyles.fieldPanel}>
+          <FormField {...args} />
+        </div>
+        <p className={showcaseStyles.helper}>
+          The wrapper provides structure while the supplied control retains its
+          native props and behavior.
+        </p>
+      </div>
+    </ElementShowcase>
+  ),
+};
+
 export const Default: Story = {
   args: {
     labelText: "Text Input Form Field",
+    field: <TextInput placeholder="Enter text" />,
   },
+  parameters: { layout: "centered" },
 };
 
 export const MenuInputField: Story = {
   args: {
-    labelText: "Text Input Form Field",
+    labelText: "Menu input form field",
+    field: menuInput,
   },
+  parameters: { layout: "padded" },
   decorators: [
     (Story) => (
       <div style={{ minHeight: 300, padding: 16 }}>

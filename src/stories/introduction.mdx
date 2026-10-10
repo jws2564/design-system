@@ -1,0 +1,60 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import "./introduction.css";
+
+<Meta title="Introduction" />
+
+<div className="portfolio-intro">
+  <p className="portfolio-intro__eyebrow">React component system</p>
+  <h1>Small primitives, composed into complete workflows.</h1>
+  <p className="portfolio-intro__lede">
+    This project explores an atomic approach to interface design: shared tokens
+    establish the visual language, focused components encode repeatable behavior,
+    and composed examples demonstrate how the system holds together in realistic forms.
+  </p>
+
+  <div className="portfolio-intro__facts">
+    <div className="portfolio-intro__fact">
+      <strong>React + TypeScript</strong>
+      <span>Typed component APIs and predictable composition.</span>
+    </div>
+    <div className="portfolio-intro__fact">
+      <strong>Storybook</strong>
+      <span>Isolated states, controls, documentation, and interaction checks.</span>
+    </div>
+    <div className="portfolio-intro__fact">
+      <strong>Accessibility</strong>
+      <span>Semantic controls, visible focus, and automated audits.</span>
+    </div>
+  </div>
+
+  <section className="portfolio-intro__section">
+    <h2>What the system demonstrates</h2>
+    <p>
+      The library moves from foundational decisions to increasingly complete
+      interface behavior while keeping styling, state, and data concerns separated.
+    </p>
+    <div className="portfolio-intro__cards">
+      <article className="portfolio-intro__card">
+        <h3>Token-led styling</h3>
+        <p>Color, type, spacing, and shape are expressed as reusable decisions.</p>
+      </article>
+      <article className="portfolio-intro__card">
+        <h3>Composable interactions</h3>
+        <p>Inputs, cards, tabs, and menus combine without duplicating behavior.</p>
+      </article>
+      <article className="portfolio-intro__card">
+        <h3>Workflow-level proof</h3>
+        <p>Modal examples show validation, filtering, selection, and responsive layout.</p>
+      </article>
+    </div>
+  </section>
+
+  <section className="portfolio-intro__section">
+    <h2>Suggested path</h2>
+    <ol className="portfolio-intro__steps">
+      <li><span><strong>Start with Atoms</strong> to see the shared design decisions.</span></li>
+      <li><span><strong>Explore Elements, Mixtures, and Compounds</strong> to inspect the component APIs and states.</span></li>
+      <li><span><strong>Finish with Organisms</strong> to try the complete form workflows.</span></li>
+    </ol>
+  </section>
+</div>

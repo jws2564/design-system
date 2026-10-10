@@ -1,11 +1,12 @@
-// menu-input.stories.tsx
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { MenuInput } from "./menu-input.tsx";
-import type { Props as MenuInputProps } from "./menu-input.tsx";
+import { fn } from "storybook/test";
 import type { ListItem } from "../../compounds/list-card/list-card.tsx";
 import type { Tab } from "../../compounds/tab-set/tab-set.tsx";
-import { fn } from "storybook/test";
+import { ElementShowcase } from "../../elements/element-showcase.tsx";
+import { MenuInput } from "./menu-input.tsx";
+import type { Props as MenuInputProps } from "./menu-input.tsx";
+import storyStyles from "./menu-input.stories.module.scss";
 
 const sampleItems: ListItem[] = [
   {
@@ -48,19 +49,15 @@ const meta: Meta<typeof MenuInput> = {
   component: MenuInput,
   tags: ["autodocs"],
   parameters: {
-    layout: "padded",
+    layout: "fullscreen",
     docs: {
-      story: { inline: false },
+      story: { inline: false, height: "720px" },
+      description: {
+        component:
+          "A composed selection control that combines a trigger, searchable list, category tabs, and selected-state feedback. Use it when a standard select cannot provide enough context for each option.",
+      },
     },
-    iframeHeight: 800,
   },
-  decorators: [
-    (Story) => (
-      <div style={{ height: 300, padding: 16 }}>
-        <Story />
-      </div>
-    ),
-  ],
   args: {
     items: sampleItems,
     selectedListItemId: "1",
@@ -95,22 +92,18 @@ const meta: Meta<typeof MenuInput> = {
     enableSearch: {
       control: "boolean",
       description:
-        "When enabled a search filter will be available in the menu. Search filters the menu list by matches in the `description` and `label` fields of the `ListItem`",
+        "When enabled, search filters the menu by matches in the item label and description.",
     },
     showSelectedCardDescription: {
       control: "boolean",
-      table: {
-        defaultValue: { summary: "false" },
-      },
+      table: { defaultValue: { summary: "false" } },
       description:
         "Shows or hides the description on the selected item when the menu is closed",
     },
     closeOnSelect: {
       control: "boolean",
       description: "When true the menu will close after a row is clicked",
-      table: {
-        defaultValue: { summary: "true" },
-      },
+      table: { defaultValue: { summary: "true" } },
     },
     onSelectCallback: {
       action: "select",
@@ -122,28 +115,62 @@ export default meta;
 
 type Story = StoryObj<typeof MenuInput>;
 
-/** Stateful playground so clicking an item updates the selectedListItemId */
+const StatefulMenuInput = (args: MenuInputProps) => {
+  const [selectedId, setSelectedId] = React.useState(args.selectedListItemId);
+
+  React.useEffect(() => {
+    setSelectedId(args.selectedListItemId);
+  }, [args.selectedListItemId]);
+
+  const handleSelect: MenuInputProps["onSelectCallback"] = (item) => {
+    setSelectedId(item.id);
+    args.onSelectCallback?.(item);
+  };
+
+  return (
+    <MenuInput
+      {...args}
+      selectedListItemId={selectedId}
+      onSelectCallback={handleSelect}
+    />
+  );
+};
+
+export const Primary: Story = {
+  render: (args) => (
+    <ElementShowcase
+      eyebrow="Mixtures / Selection"
+      title="Menu input"
+      description="A richer alternative to a standard select, built for choices that need supporting detail, search, or lightweight categorization."
+      marker="M"
+      facts={[
+        { label: "Composes", value: "5 system components" },
+        { label: "Filters", value: "Search · Category" },
+        { label: "Selection", value: "Controlled callback" },
+      ]}
+    >
+      <div className={storyStyles.demo}>
+        <p className={storyStyles.guidance}>
+          <span className={storyStyles.index}>01</span>
+          Open the field to search, switch categories, and choose an item.
+        </p>
+        <div className={storyStyles.control}>
+          <span className={storyStyles.controlLabel}>Selected option</span>
+          <StatefulMenuInput {...args} />
+        </div>
+      </div>
+    </ElementShowcase>
+  ),
+};
+
+/** Stateful playground so clicking an item updates the selectedListItemId. */
 export const Playground: Story = {
-  render: (args) => {
-    const [selectedId, setSelectedId] = React.useState(args.selectedListItemId);
-
-    React.useEffect(() => {
-      setSelectedId(args.selectedListItemId);
-    }, [args.selectedListItemId]);
-
-    const handleSelect: MenuInputProps["onSelectCallback"] = (item) => {
-      setSelectedId(item.id);
-      args.onSelectCallback?.(item);
-    };
-
-    return (
-      <MenuInput
-        {...args}
-        selectedListItemId={selectedId}
-        onSelectCallback={handleSelect}
-      />
-    );
-  },
+  parameters: { layout: "padded" },
+  render: (args) => (
+    <div style={{ height: 300, padding: 16 }}>
+      <StatefulMenuInput {...args} />
+    </div>
+  ),
 };
 
 export const WithSearchAndTabs: Story = {
@@ -154,15 +181,18 @@ export const WithSearchAndTabs: Story = {
     showSelectedCardDescription: true,
   },
   render: Playground.render,
+  parameters: { layout: "padded" },
 };
 
-export const NoSearch_NoTabs: Story = {
+export const NoSearchNoTabs: Story = {
+  name: "No Search / No Tabs",
   args: {
     enableSearch: false,
     categoryTabList: undefined,
     defaultCategoryId: undefined,
   },
   render: Playground.render,
+  parameters: { layout: "padded" },
 };
 
 export const PreselectedCategoryB: Story = {
@@ -171,4 +201,5 @@ export const PreselectedCategoryB: Story = {
     selectedListItemId: "3",
   },
   render: Playground.render,
+  parameters: { layout: "padded" },
 };

@@ -3,7 +3,7 @@
     cursor: pointer;
     line-height: normal;
     text-align: left;
-    padding: 12px;
+    padding: 10px 12px;
     font-size: 14px; //TODO var for font size
 
     .description {
@@ -17,6 +17,10 @@
 
     .selected-icon {
       padding: 0 4px 0;
+    }
+
+    .label {
+      font-weight: var(--font-weight-medium);
     }
 
     .badge {
